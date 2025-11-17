@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f1f3f6;
+            margin: 0;
+        }
+
+        .card{
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        .main{
+            position: relative;   /* Needed for heart icon */
+            width: 100%;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        /* Prevent image cutting */
+        .main img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Heart icon */
+        .heart{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 22px;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .title{
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .subtitle{
+            font-size: 14px;
+            color: gray;
+            margin-top: 5px;
+        }
+
+        .ratings{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .ratings button{
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .price{
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .price span{
+            text-decoration: line-through;
+            font-size: 14px;
+            margin-left: 5px;
+            color: gray;
+        }
+
+        .offer{
+            color: green;
+            margin-left: 5px;
+            font-size: 14px;
+        }
+
+        .bank{
+            margin-top: 5px;
+            font-size: 15px;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="main">
+            <div class="heart">♡</div>
+            <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/w/x/h/-original-imahfa7xspmxemvj.jpeg">
+        </div>
+
+        <div class="title">SAMSUNG Galaxy Watch6 LTE</div>
+
+        <div class="subtitle">Graphite Strap, 44mm</div>
+
+        <div class="ratings">
+            <button>4.3★</button>
+            <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fa_62673a.png" width="60">
+        </div>
+
+        <div class="price">
+            ₹18,999 <span>₹41,999</span> <span class="offer">54% off</span>
+        </div>
+
+        <div class="bank">Bank Offer</div>
+
+    </div>
+
+</body>
+</html>
