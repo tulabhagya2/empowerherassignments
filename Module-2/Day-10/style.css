@@ -420,18 +420,3 @@ body {
     .section-title {
         font-size: 2rem;
     }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 0 15px;
-    }
-
-    .hero-title {
-        font-size: 1.75rem;
-    }
-
-    .cta-button {
-        padding: 0.875rem 2rem;
-    }
-}
