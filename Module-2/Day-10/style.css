@@ -1,5 +1,5 @@
 
-/* Reset and Base Styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -420,3 +420,4 @@ body {
     .section-title {
         font-size: 2rem;
     }
+}
