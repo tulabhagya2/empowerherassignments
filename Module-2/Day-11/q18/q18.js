@@ -6,7 +6,7 @@ if (true) {
 }
 console.log(y);
 console.log(x);
-// it will throught the reference error x is not defined.
+// it will through the reference error x is not defined.
 
 
 //2.
