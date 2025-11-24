@@ -50,7 +50,7 @@ const two = { y: 2 };
 let res={...one,...two};
 console.log(res);
 
-//Destructuring & optional chaining
+//4.Destructuring & optional chaining
 const arr = [10, 20, 30];
 const[first,second]=arr;
 console.log(first);
@@ -76,7 +76,7 @@ console.log(j);
 // Because const prevents the variable from being reassigned, ensuring the value reference stays the same.
 
 
-//Ternary Operator
+//6.Ternary Operator
 let speed=(kmph>60)?"Fast":"Normal";
 
 let age=20
@@ -89,7 +89,7 @@ let numbercheck=(number>0)?"Positive":(number==0)?"zero":"Negative";
 console.log(numbercheck);
 
 
-//Spreadc,Rect & Arrays
+//7.Spreadc,Rest & Arrays
 const nums=[1,2,3];
 const nums1=[4,5]
 const final=[...nums,...nums1];
@@ -126,10 +126,9 @@ const id2 = 101;
 const name = "Bhagya";
 
 const user1 = {
-  id2,       // property shorthand
-  name,     // property shorthand
-
-  // method shorthand
+  id2,       
+  name,    
+  
   greet() {
     console.log(`Hello, ${this.name}!`);
   }
