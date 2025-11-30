@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        <ul id="myList">
+            <li>Full stsck Development</li>
+            <li>Mern Stack development</li>
+            <li>Web Development</li>
+
+        </ul>
+        <button id="addBtn">Add Item</button>
+        <script>
+            //select the ul
+            const ulElement=document.querySelector("#myList");
+            const button=document.querySelector("#addBtn");
+            button.addEventListener("click",function(){
+                let newLi=document.createElement("li");
+                newLi.textContent="New Item";
+                let liCount=ulElement.children.length+1;
+                if(liCount%2===1){
+                    newLi.style.fontWeight="bold";
+                    newLi.style.color="blue";
+                }
+                    else {
+                // Even — italic & red
+                newLi.style.fontStyle = "italic";
+                newLi.style.color = "red";
+                    }
+        
+
+            // Add li to ul
+            ulElement.appendChild(newLi);
+        });
+
+            
+        
+
+
+        </script>
+    
+</body>
+</html>
