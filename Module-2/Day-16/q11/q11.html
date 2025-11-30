@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container{
+            width:500px;
+            text-align: center;
+            padding:10px;
+            margin:auto;
+            margin-top: 200px;;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1 id="h1element">Welcome to the Module2</h1>
+    <p>Dom is very interesting concept in javascript</p>
+    
+        
+    </div>
+    <script>
+        let h1element=document.getElementById("h1element");
+        h1element.textContent="Welcome to the DOM World!";
+        let pelement=document.getElementsByTagName("p");
+        pelement[0].style.color="blue";
+        let divelement=document.querySelector(".container");
+        divelement.style.backgroundColor="yellow";
+    </script>
+</body>
+</html>
