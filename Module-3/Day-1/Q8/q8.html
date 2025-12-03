@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App with API + LocalStorage</title>
+
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .todo {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: green;
+        }
+        button {
+            margin-left: 5px;
+        }
+        #msg {
+            font-size: 18px;
+            margin-top: 20px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Todo App (API + LocalStorage)</h2>
+    <button onclick="fetchTodos()">Fetch & Save First 20 Todos</button>
+
+    <div id="todoList"></div>
+
+    <p id="msg"></p>
+
+    <script>
+        
+        async function fetchTodos() {
+            try {
+                const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+                const data = await res.json();
+
+                const first20 = data.slice(0, 20);
+
+                localStorage.setItem("todos", JSON.stringify(first20));
+
+                renderTodos();
+
+            } catch (error) {
+                console.error("Error fetching todos:", error);
+            }
+        }
+
+        
+        function getTodos() {
+            return JSON.parse(localStorage.getItem("todos")) || [];
+        }
+
+       
+        function saveTodos(todos) {
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+
+       
+        function deleteTodo(id) {
+            let todos = getTodos();
+            todos = todos.filter(todo => todo.id !== id);
+            saveTodos(todos);
+            renderTodos();
+        }
+
+        
+        function toggleComplete(id) {
+            let todos = getTodos();
+            todos = todos.map(todo =>
+                todo.id === id ? { ...todo, completed: !todo.completed } : todo
+            );
+            saveTodos(todos);
+            renderTodos();
+        }
+
+       
+        function renderTodos() {
+            const todos = getTodos();
+            const container = document.getElementById("todoList");
+            const msg = document.getElementById("msg");
+
+            container.innerHTML = "";
+
+            if (todos.length === 0) {
+                msg.textContent = "No Todos Available";
+                return;
+            } else {
+                msg.textContent = "";
+            }
+
+            todos.forEach(todo => {
+                const div = document.createElement("div");
+                div.className = "todo";
+
+                const title = document.createElement("span");
+                title.textContent = todo.title;
+                if (todo.completed) title.classList.add("completed");
+
+                const status = document.createElement("span");
+                status.textContent = todo.completed ? "✓ Completed" : "⛔ Not Completed";
+
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "Delete";
+                delBtn.onclick = () => deleteTodo(todo.id);
+
+              
+                const toggleBtn = document.createElement("button");
+                toggleBtn.textContent = "Toggle";
+                toggleBtn.onclick = () => toggleComplete(todo.id);
+
+                div.appendChild(title);
+                div.appendChild(status);
+                div.appendChild(toggleBtn);
+                div.appendChild(delBtn);
+
+                container.appendChild(div);
+            });
+        }
+
+        
+        renderTodos();
+    </script>
+
+</body>
+</html>
