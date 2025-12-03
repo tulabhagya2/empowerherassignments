@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L1 - Enhanced Todo List</title>
+  <style>
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h2>Enhanced Todo List</h2>
+
+  <!-- Search Bar -->
+  <input type="text" id="search" placeholder="Search tasks..." oninput="renderTasks()" />
+  <br><br>
+
+  <!-- Input for adding tasks -->
+  <input type="text" id="taskInput" placeholder="Enter task" />
+  <button onclick="addTask()">Add Task</button>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+   
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    
+    function addTask() {
+      const text = document.getElementById("taskInput").value.trim();
+
+      if (text === "") {
+        alert("Please enter a task");
+        return;
+      }
+
+      const newTask = {
+        id: Date.now(), 
+        text: text,
+        completed: false,
+      };
+
+      tasks.push(newTask);
+      saveTasks();
+      renderTasks();
+
+      document.getElementById("taskInput").value = "";
+    }
+
+    
+    
+    function toggleTask(id) {
+      tasks = tasks.map(task =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      );
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(task => task.id !== id);
+      saveTasks();
+      renderTasks();
+    }
+
+   
+
+    function renderTasks() {
+      const list = document.getElementById("taskList");
+      const searchText = document.getElementById("search").value.toLowerCase();
+
+      list.innerHTML = ""; 
+
+      tasks
+        .filter(task => task.text.toLowerCase().includes(searchText))
+        .forEach(task => {
+          const li = document.createElement("li");
+
+         
+          if (task.completed) li.classList.add("completed");
+
+          li.innerHTML = `
+            <span onclick="toggleTask(${task.id})" style="cursor: pointer;">
+              ${task.text}
+            </span>
+            <button onclick="deleteTask(${task.id})">Delete</button>
+          `;
+
+          list.appendChild(li);
+        });
+    }
+
+   
+    renderTasks();
+  </script>
+</body>
+</html>
