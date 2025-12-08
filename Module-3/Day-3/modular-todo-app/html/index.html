@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+    <h1>Welcome to Modular Todo App</h1>
+    <p>Please signup or login to continue.</p>
+    <div id="footer"></div>
+
+    <script type="module">
+        import { createNavbar } from './js/navbar.js';
+        import { createFooter } from './js/footer.js';
+
+        document.getElementById('navbar').appendChild(createNavbar());
+        document.getElementById('footer').appendChild(createFooter());
+    </script>
+</body>
+</html>
