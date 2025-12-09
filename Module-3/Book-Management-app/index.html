@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Book Management Assignment</title>
+<style>
+body { margin:0; font-family: Arial; background:#f2f4f8; display:flex; }
+.sidebar { width:300px; background:white; padding:20px; border-right:1px solid #ddd; }
+.sidebar h2 { margin-bottom:10px; }
+.field { margin-bottom:12px; }
+label { display:block; margin-bottom:5px; font-size:14px; }
+input { width:100%; padding:8px; border-radius:6px; border:1px solid #ccc; }
+button { padding:10px; border:none; border-radius:6px; cursor:pointer; background:#2563eb; color:white; }
+.danger { background:#e11d48; }
+.muted { background:#dbeafe; color:#1e3a8a; }
+
+.main { flex:1; padding:20px; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.card { background:white; padding:15px; border-radius:12px; box-shadow:0 3px 6px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
+.cover { height:150px; background-size:cover; border-radius:8px; margin-bottom:12px; }
+.title { font-weight:bold; margin-bottom:4px; }
+.author { color:#555; font-size:14px; }
+.price { font-weight:bold; margin-top:auto; }
+.actions { display:flex; gap:8px; margin-top:10px; }
+.actions button { flex:1; padding:8px; font-size:12px; }
+
+@media(max-width:900px){ .grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:600px){ .grid{grid-template-columns:repeat(1,1fr);} }
+
+/* Modal */
+#modalBg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); justify-content:center; align-items:center; }
+#modal { background:white; padding:20px; border-radius:10px; width:350px; }
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+<h2>Add Book</h2>
+
+<form id="bookForm">
+    <div class="field">
+        <label>Title</label>
+        <input id="title" required />
+    </div>
+
+    <div class="field">
+        <label>Author</label>
+        <input id="author" required />
+    </div>
+
+    <div class="field">
+        <label>Price</label>
+        <input id="price" required type="number" />
+    </div>
+
+    <div class="field">
+        <label>Image URL</label>
+        <input id="image" required />
+    </div>
+
+    <button type="submit">Add Book</button>
+    <button type="button" id="addDummy" class="muted">Add Dummy Books</button>
+</form>
+</aside>
+
+<main class="main">
+<h2>Books</h2>
+<div class="grid" id="bookGrid"></div>
+</main>
+
+<div id="modalBg">
+    <div id="modal">
+        <h3 id="modalTitle"></h3>
+        <p id="modalAuthor"></p>
+        <p id="modalPrice"></p>
+        <img id="modalImg" style="width:100%;border-radius:8px;">
+        <br><br>
+        <button class="muted" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// 🔹 Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBeBhQG7SQmqcL31h3lZpMKSXNLq7Y67k4",
+  authDomain: "book-management-app-2f880.firebaseapp.com",
+  databaseURL: "https://book-management-app-2f880-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "book-management-app-2f880",
+  storageBucket: "book-management-app-2f880.firebasestorage.app",
+  messagingSenderId: "648743723658",
+  appId: "1:648743723658:web:35cc58dbaa6f0b83058373",
+  measurementId: "G-X4T8ZNRDH3"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const booksRef = ref(db, "books");
+
+const bookGrid = document.getElementById("bookGrid");
+const form = document.getElementById("bookForm");
+const addDummyBtn = document.getElementById("addDummy");
+
+// ADD BOOK
+form.addEventListener("submit", e => {
+    e.preventDefault();
+    push(booksRef, {
+        title: title.value,
+        author: author.value,
+        price: price.value,
+        image: image.value
+    });
+    form.reset();
+});
+
+// ADD DUMMY BOOKS
+addDummyBtn.addEventListener("click", () => {
+    const dummyBooks = [
+        {title:"Harry Potter", author:"J.K. Rowling", price:500, image:"https://images-na.ssl-images-amazon.com/images/I/81YOuOGFCJL.jpg"},
+        {title:"The Hobbit", author:"J.R.R. Tolkien", price:400, image:"https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg"},
+        {title:"The Alchemist", author:"Paulo Coelho", price:300, image:"https://images-na.ssl-images-amazon.com/images/I/71aFt4+OTOL.jpg"},
+        {title:"Think and Grow Rich", author:"Napoleon Hill", price:350, image:"https://images-na.ssl-images-amazon.com/images/I/81eB+7+CkUL.jpg"},
+        {title:"To Kill a Mockingbird", author:"Harper Lee", price:450, image:"https://images-na.ssl-images-amazon.com/images/I/81OdwZGJf1L.jpg"},
+        {title:"1984", author:"George Orwell", price:400, image:"https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg"}
+    ];
+    dummyBooks.forEach(b => push(booksRef, b));
+});
+
+// REALTIME FETCH
+onValue(booksRef, snapshot => {
+    bookGrid.innerHTML = "";
+    snapshot.forEach(child => {
+        const id = child.key;
+        const data = child.val();
+        bookGrid.innerHTML += `
+        <div class="card">
+            <div class="cover" style="background-image:url('${data.image}')"></div>
+            <div class="title">${data.title}</div>
+            <div class="author">${data.author}</div>
+            <div class="price">₹${data.price}</div>
+            <div class="actions">
+                <button onclick="updateAuthor('${id}', '${data.author}')">Update</button>
+                <button class="danger" onclick="deleteBook('${id}')">Delete</button>
+                <button class="muted" onclick="viewDetails('${data.title}','${data.author}','${data.price}','${data.image}')">View</button>
+            </div>
+        </div>
+        `;
+    });
+});
+
+// UPDATE AUTHOR
+window.updateAuthor = function(id, oldAuthor){
+    const newName = prompt("Enter new author name", oldAuthor);
+    if(newName) update(ref(db, "books/"+id), {author:newName});
+}
+
+// DELETE BOOK
+window.deleteBook = function(id){
+    if(confirm("Are you sure?")) remove(ref(db, "books/"+id));
+}
+
+// VIEW DETAILS
+window.viewDetails = function(title, author, price, image){
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalAuthor").innerText = "Author: "+author;
+    document.getElementById("modalPrice").innerText = "Price: ₹"+price;
+    document.getElementById("modalImg").src = image;
+    document.getElementById("modalBg").style.display="flex";
+}
+
+window.closeModal = function(){
+    document.getElementById("modalBg").style.display="none";
+}
+</script>
+</body>
+</html>
