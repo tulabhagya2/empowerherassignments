@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Time Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <h1>Analytics</h1>
+
+        <div>
+            <button id="backBtn" class="btn btn-secondary">Back</button>
+            <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<div class="analytics-container">
+
+    <div class="analytics-header">
+        <label>Select Date:</label>
+        <input type="date" id="selectedDate">
+    </div>
+
+    <div class="summary-cards">
+        <div class="summary-card">
+            <h3>Total Hours</h3>
+            <p id="totalHours">0</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Total Activities</h3>
+            <p id="totalActivities">0</p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Top Category</h3>
+            <p id="topCategory">-</p>
+        </div>
+    </div>
+
+    <canvas id="categoryChart"></canvas>
+
+    <div id="activitiesTable"></div>
+
+</div>
+
+<script type="module" src="js/analytics.js"></script>
+</body>
+</html>

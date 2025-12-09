@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Time Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="nav-container">
+            <h1>Time Tracker</h1>
+            <div>
+                <button id="viewAnalyticsBtn" class="btn btn-primary">Analyse</button>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Date Selector -->
+        <div class="date-selector">
+            <label for="selectedDate">Select Date:</label>
+            <input type="date" id="selectedDate">
+            <span id="remainingMinutes">Remaining Minutes: 1440</span>
+        </div>
+
+        <!-- Add Activity Form -->
+        <div class="activity-form-card">
+            <h2>Add Activity</h2>
+            <div class="form-row">
+                <input type="text" id="activityName" placeholder="Activity Name">
+                <select id="category">
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Work">Work</option>
+                    <option value="Study">Study</option>
+                    <option value="Sleep">Sleep</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Exercise">Exercise</option>
+                    <option value="Other">Other</option>
+                </select>
+                <input type="number" id="duration" placeholder="Duration (min)" min="1">
+            </div>
+            <button id="addActivityBtn" class="btn btn-accent">Add Activity</button>
+        </div>
+
+        <!-- Activities List -->
+        <div class="activities-section">
+            <div class="section-header">
+                <h2>Activities</h2>
+            </div>
+            <div id="activitiesList" class="activities-list">
+                <!-- Activity items will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
