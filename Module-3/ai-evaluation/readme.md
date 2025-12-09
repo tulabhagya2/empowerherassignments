@@ -9,7 +9,7 @@ This project was initially built using **BoltNew AI tool** and later enhanced, d
 ---
 
 ## 🚀 Live Demo
-[View Live Deployment](YOUR_DEPLOYED_LINK_HERE)
+https://tulabhagya2.github.io/ai-evaluation-repo/
 
 ---
 
