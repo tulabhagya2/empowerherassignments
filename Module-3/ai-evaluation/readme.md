@@ -14,7 +14,9 @@ https://tulabhagya2.github.io/ai-evaluation-repo/
 ---
 
 ## 🎥 Video Walkthrough
-[Watch 2–5 Minute Video](YOUR_VIDEO_LINK_HERE)
+
+
+https://drive.google.com/file/d/1k-ihOgf0c9xdvEifO6KGm7r51rGoo-Jg/view?usp=drivesdk
 
 **In the video, I demonstrate:**
 - User login and signup  
